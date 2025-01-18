@@ -9,7 +9,7 @@ interface LoginButtonProps {
     isChild?: boolean
 }
 
-export const LoginButton = ({ children, mode = "redirect", isChild = false}: LoginButtonProps) => {
+export const LoginButton = ({ children, mode = "redirect", isChild = false }: LoginButtonProps) => {
     const router = useRouter();
 
     const onClick = () => {
@@ -21,6 +21,7 @@ export const LoginButton = ({ children, mode = "redirect", isChild = false}: Log
             <span>rendering modal</span>
         );
     }
+
     return (
         <span onClick={onClick} className="cursor-pointer">{children}</span>
     )
