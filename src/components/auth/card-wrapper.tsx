@@ -1,6 +1,9 @@
 import React from "react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import Link from "next/link";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Header } from "./header";
+import { Social } from "./social";
+import { Button } from "../ui/button";
 
 interface CardWrapperProps {
     children: React.ReactNode,
@@ -19,5 +22,16 @@ export const CardWrapper = ({ children, headerLabel, backButtonLabel, backButton
             <CardContent>
                 {children}
             </CardContent>
+            {showSocial && (
+                <CardFooter>
+                    <Social />
+                </CardFooter>
+            )}
+            <CardFooter className="flex justify-center">
+                <Button variant="link" size="sm">
+                    <Link href={backButtonHref}>{backButtonLabel}</Link>
+                </Button>
+            </CardFooter>
         </Card>
+    );
 }

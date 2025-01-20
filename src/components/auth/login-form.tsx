@@ -8,7 +8,6 @@ export const LoginForm: () => JSX.Element = () => {
             backButtonLabel="Don't have an account?"
             backButtonHref="/auth/register"
             showSocial>
-            <div>Login Form</div>
             <form>
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
@@ -24,7 +23,6 @@ export const LoginForm: () => JSX.Element = () => {
                     </button>
                 </div>
             </form>
-
         </CardWrapper>
     );
 }
