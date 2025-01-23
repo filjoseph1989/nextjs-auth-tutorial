@@ -2,19 +2,13 @@
 
 import { JSX } from "react";
 import { CardWrapper } from "./card-wrapper";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { LoginSchema } from "../../../schemas";
-
-// const FormSchema = z.object({
-//     email: z.string().email(),
-//     password: z.string().min(1, {
-//         message: "Password is required"
-//     }),
-// });
 
 export const LoginForm: () => JSX.Element = () => {
     const form = useForm<z.infer<typeof LoginSchema>>({
@@ -66,7 +60,7 @@ export const LoginForm: () => JSX.Element = () => {
                         )}>
                     </FormField>
 
-                    <Button type="submit">Login</Button>
+                    <Button type="submit" className="w-full">Login</Button>
                 </form>
             </Form>
         </CardWrapper>
