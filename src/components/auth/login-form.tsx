@@ -1,28 +1,74 @@
+"use client";
+
 import { JSX } from "react";
 import { CardWrapper } from "./card-wrapper";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+
+const FormSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(1, {
+        message: "Password is required"
+    }),
+});
 
 export const LoginForm: () => JSX.Element = () => {
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        }
+    });
+
     return (
         <CardWrapper
             headerLabel="Welcome Back!"
             backButtonLabel="Don't have an account?"
             backButtonHref="/auth/register"
             showSocial>
-            <form>
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
-                    <input type="email" id="email" name="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                <div className="mb-6">
-                    <label htmlFor="password" className="block text-gray-700 font-bold mb-2">Password</label>
-                    <input type="password" id="password" name="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                <div className="flex items-center justify-between">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Sign In
-                    </button>
-                </div>
-            </form>
+            <Form { ...form }>
+                <form onSubmit={form.handleSubmit(() => {})} className="space-y-6">
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        placeholder="yourname@example.com"
+                                        type="email" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}>
+                    </FormField>
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        placeholder="****"
+                                        type="password" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}>
+                    </FormField>
+
+                    <Button type="submit" className="w-full">Login</Button>
+                </form>
+            </Form>
         </CardWrapper>
     );
 }
