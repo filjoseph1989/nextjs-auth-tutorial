@@ -3,7 +3,6 @@
 import { JSX, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { RegistrationSchema } from "../../../schemas";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { FormError } from "../form-error";
@@ -11,7 +10,8 @@ import { FormSuccess } from "../form-success";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardWrapper } from "./card-wrapper";
-import { register } from "../../../actions/register";
+import { RegistrationSchema } from "@/schemas";
+import { register } from "@/actions/register";
 
 export const RegistrationForm: () => JSX.Element = () => {
     const [error, setError] = useState<string | undefined>("");
