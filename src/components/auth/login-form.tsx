@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useState, useTransition } from "react";
+import { JSX, use, useState, useTransition } from "react";
 import { CardWrapper } from "./card-wrapper";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,8 +12,14 @@ import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
+import { useSearchParams } from "next/navigation";
 
 export const LoginForm: () => JSX.Element = () => {
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+        ? "The email was already used by other email providers."
+        : undefined;
+
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -81,7 +87,7 @@ export const LoginForm: () => JSX.Element = () => {
                         )}>
                     </FormField>
 
-                    <FormError message={error} />
+                    <FormError message={error || urlError} />
                     <FormSuccess message={success} />
 
                     <Button
