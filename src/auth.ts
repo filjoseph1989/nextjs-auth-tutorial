@@ -7,7 +7,7 @@ import { UserRole } from "@prisma/client";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
     callbacks: {
-        async signIn({user}) {
+        async signIn({}) {
             return true;
         },
         async jwt({token}) {
@@ -36,6 +36,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 data: { emailVerified: new Date()}
             })
         }
+    },
+    pages: {
+        signIn: "auth/login",
+        error: "auth/error"
     },
     adapter: PrismaAdapter(db),
     session: { strategy: "jwt" },

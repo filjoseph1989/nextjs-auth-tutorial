@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useState, useTransition } from "react";
+import { JSX, useEffect, useState, useTransition } from "react";
 import { CardWrapper } from "./card-wrapper";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,11 +12,25 @@ import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const LoginForm: () => JSX.Element = () => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const errorParam = searchParams.get("error")
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+        ? "The email was already used by another providers"
+        : "";
+
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
+
+    useEffect(() => {
+        if (errorParam ==="OAuthAccountNotLinked") {
+            router.replace("/auth/error?error=OAuthAccountNotLinked");
+        }
+    }, [errorParam, router]);
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -81,7 +95,7 @@ export const LoginForm: () => JSX.Element = () => {
                         )}>
                     </FormField>
 
-                    <FormError message={error} />
+                    <FormError message={error || urlError} />
                     <FormSuccess message={success} />
 
                     <Button
