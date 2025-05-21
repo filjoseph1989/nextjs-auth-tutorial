@@ -14,7 +14,7 @@ export default function Home() {
       <div className="space-y-6 bg-white p-4 rounded-md text-center">
         <h1 className={cn("text-6xl font-semibold drop-shadow-md", font.className)}>Auth</h1>
         <p className="text-lg capitalize">A simple authentication service</p>
-        <LoginButton>
+        <LoginButton mode="redirect">
           <Button variant="secondary" size="lg">Sign In</Button>
         </LoginButton>
       </div>
