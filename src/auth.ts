@@ -7,7 +7,11 @@ import { UserRole } from "@prisma/client";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
     callbacks: {
-        async signIn({}) {
+        async signIn({user, account}) {
+            if (account?.provider !== "credentials") return true;
+            if (!user?.id) return false;
+            const existingUser = await getUserById(user.id);
+            if (!existingUser?.emailVerified) return false;
             return true;
         },
         async jwt({token}) {
