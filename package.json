@@ -28,13 +28,13 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
-    "zod": "^3.25.13"
+    "zod": "^3.25.23"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.17.50",
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@types/uuid": "^10.0.0",
     "eslint": "^9.27.0",
