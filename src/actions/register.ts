@@ -3,9 +3,10 @@
 import { RegistrationSchema } from "../schemas";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import bcrypt from "bcryptjs";
 import { getUserByEmail } from "../data/user";
 import { generateVerificationToken } from "@/lib/tokens";
+import bcrypt from "bcryptjs";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values: z.infer<typeof RegistrationSchema>) => {
     const validated = RegistrationSchema.safeParse(values);
@@ -33,6 +34,11 @@ export const register = async (values: z.infer<typeof RegistrationSchema>) => {
     });
 
     const verificationToken = await generateVerificationToken(email);
+
+    sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token
+    );
 
     return { success: "Confirmation email sent!"};
 }

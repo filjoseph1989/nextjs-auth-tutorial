@@ -7,6 +7,7 @@ import { AuthError } from "next-auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
     const validated = LoginSchema.safeParse(values);
@@ -25,11 +26,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
     if (!existingUser.emailVerified) {
         try {
-            await generateVerificationToken(email);
+            const token = await generateVerificationToken(email);
+            await sendVerificationEmail(
+                token.email,
+                token.token
+            );
             return { success: "Confirmation email sent!" };
         } catch (error) {
             console.error("Error generating verification token:", error);
-            return { success: "Something went wrong!" };
+            return { error: "Something went wrong while trying to send a confirmation email!" };
         }
     }
 
