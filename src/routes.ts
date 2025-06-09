@@ -2,7 +2,10 @@
  * An array of public routes that do not require authentication.
  * @type {string[]} publicRoutes
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = [
+    "/",
+    "/auth/new-verification",
+];
 
 /**
  * An array of authentication routes.
